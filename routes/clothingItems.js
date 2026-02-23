@@ -1,12 +1,12 @@
-const router = require('express').Router();
-const {
-  getClothingItems,
-  likeItem,
-  dislikeItem,
-} = require('../controllers/clothingItems');
+const express = require('express');
+const router = express.Router();
 
-router.get('/items', getClothingItems);
-router.put('/items/:itemId/likes', likeItem);
-router.delete('/items/:itemId/likes', dislikeItem);
+// Import ALL controller methods
+const clothingController = require('../controllers/clothingItems');
+
+// Define routes using dot notation (no destructuring)
+router.get('/items', clothingController.getClothingItems);
+router.put('/items/:itemId/likes', clothingController.likeItem);
+router.delete('/items/:itemId/likes', clothingController.dislikeItem);
 
 module.exports = router;
