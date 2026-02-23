@@ -1,6 +1,4 @@
 const express = require('express');
-const router = express.Router();
-
 const {
   getClothingItems,
   createClothingItem,
@@ -8,6 +6,8 @@ const {
   likeItem,
   dislikeItem,
 } = require('../controllers/clothingItems');
+
+const router = express.Router();
 
 router.get('/items', getClothingItems);
 router.post('/items', createClothingItem);
