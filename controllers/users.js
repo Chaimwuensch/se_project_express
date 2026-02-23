@@ -10,6 +10,7 @@ module.exports.getUsers = (req, res) => {
   User.find({})
     .then((users) => res.send(users))
     .catch((err) => {
+      console.error(err);
       res
         .status(INTERNAL_SERVER_ERROR)
         .send({ message: 'An error has occurred on the server' });
