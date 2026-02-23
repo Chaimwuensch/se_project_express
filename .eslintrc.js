@@ -4,8 +4,8 @@ module.exports = {
     node: true,
   },
 
-  // Add the necessary extensions.
   extends: ["eslint:recommended", "airbnb-base", "prettier"],
+
   overrides: [
     {
       env: {
@@ -17,11 +17,13 @@ module.exports = {
       },
     },
   ],
+
   parserOptions: {
     ecmaVersion: "latest",
-    sourceType: "module",
+    sourceType: "script",
   },
+
   rules: {
-        "no-underscore-dangle": ["error", { "allow": ["_id"] }]
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
   },
 };

@@ -1,17 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const usersRouter = require('./routes/users');
-const clothingItemsRouter = require('./routes/clothingItems');
+const mainRouter = require('./routes/index');
 
 const { PORT = 3001 } = process.env;
 const app = express();
 
 mongoose.connect('mongodb://localhost:27017/wtwr_db');
 
-
 app.use((req, res, next) => {
   req.user = {
-    _id: "5d8b8592978f8bd833ca8133"
+    _id: "5d8b8592978f8bd833ca8133",
   };
   next();
 });
@@ -19,8 +17,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/users', usersRouter);
-app.use('/items', clothingItemsRouter);
+app.use(mainRouter);
 
 app.use((req, res) => {
   res.status(404).send({ message: 'Requested resource not found' });
