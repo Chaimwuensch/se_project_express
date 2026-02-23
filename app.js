@@ -30,6 +30,4 @@ app.use((req, res) => {
   res.status(NOT_FOUND_ERROR).send({ message: 'Requested resource not found' });
 });
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
+app.listen(PORT);

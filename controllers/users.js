@@ -10,7 +10,6 @@ module.exports.getUsers = (req, res) => {
   User.find({})
     .then((users) => res.send(users))
     .catch((err) => {
-      console.error(err);
       res
         .status(INTERNAL_SERVER_ERROR)
         .send({ message: 'An error has occurred on the server' });
@@ -27,7 +26,6 @@ module.exports.getUser = (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      console.error(err);
       if (err.name === 'DocumentNotFoundError') {
         return res
           .status(NOT_FOUND_ERROR)
@@ -51,7 +49,6 @@ module.exports.createUser = (req, res) => {
   User.create({ name, avatar })
     .then((user) => res.status(201).send(user))
     .catch((err) => {
-      console.error(err);
       if (err.name === 'ValidationError') {
         return res
           .status(BAD_REQUEST_ERROR)

@@ -1,3 +1,10 @@
+const ClothingItem = require('../models/clothingItem');
+const {
+  BAD_REQUEST_ERROR,
+  NOT_FOUND_ERROR,
+  INTERNAL_SERVER_ERROR,
+} = require('../utils/errors');
+
 // PUT /items/:itemId/likes
 module.exports.likeItem = (req, res) => {
   ClothingItem.findByIdAndUpdate(
@@ -8,7 +15,6 @@ module.exports.likeItem = (req, res) => {
     .orFail()
     .then((item) => res.send(item))
     .catch((err) => {
-      console.error(err);
       if (err.name === 'DocumentNotFoundError') {
         return res
           .status(NOT_FOUND_ERROR)
@@ -35,7 +41,6 @@ module.exports.dislikeItem = (req, res) => {
     .orFail()
     .then((item) => res.send(item))
     .catch((err) => {
-      console.error(err);
       if (err.name === 'DocumentNotFoundError') {
         return res
           .status(NOT_FOUND_ERROR)
