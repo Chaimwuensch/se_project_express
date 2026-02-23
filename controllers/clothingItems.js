@@ -1,4 +1,14 @@
 const ClothingItem = require('../models/clothingItem');
+
+const getClothingItems = (req, res) => {
+  ClothingItem.find({})
+    .then(items => res.send({ data: items }))
+    .catch(err => {
+      console.error(err);
+      res.status(500).send({ message: 'Server error' });
+    });
+};
+
 const {
   BAD_REQUEST_ERROR,
   NOT_FOUND_ERROR,
@@ -56,3 +66,5 @@ module.exports.dislikeItem = (req, res) => {
         .send({ message: 'An error has occurred on the server' });
     });
 };
+
+module.exports = { getClothingItems};
