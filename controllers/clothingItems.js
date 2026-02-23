@@ -9,7 +9,6 @@ const getClothingItems = (req, res) => {
   ClothingItem.find({})
     .then(items => res.send({ data: items }))
     .catch(err => {
-      console.error(err);
       res.status(INTERNAL_SERVER_ERROR).send({ message: 'Server error' });
     });
 };
