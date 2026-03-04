@@ -63,6 +63,7 @@ module.exports.createUser = (req, res) => {
       const userObj = user.toObject();
       delete userObj.password;
       res.status(201).send(userObj);
+      return;
     })
     .catch((err) => {
       if (err.code === 11000) {
@@ -97,6 +98,7 @@ module.exports.login = (req, res) => {
         expiresIn: '7d',
       });
       res.send({ token });
+      return;
     })
     .catch(() => {
       res
