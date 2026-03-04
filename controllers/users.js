@@ -51,6 +51,12 @@ module.exports.getCurrentUser = (req, res) => {
 module.exports.createUser = (req, res) => {
   const { name, avatar, email, password } = req.body;
 
+  if (!email || !password) {
+    return res
+      .status(BAD_REQUEST_ERROR)
+      .send({ message: "The 'email' and 'password' fields are required" });
+  }
+
   bcrypt.hash(password, 10)
     .then((hashedPassword) => User.create({ name, avatar, email, password: hashedPassword }))
     .then((user) => {
@@ -78,6 +84,12 @@ module.exports.createUser = (req, res) => {
 // POST /signin
 module.exports.login = (req, res) => {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res
+      .status(BAD_REQUEST_ERROR)
+      .send({ message: "The 'email' and 'password' fields are required" });
+  }
 
   User.findUserByCredentials(email, password)
     .then((user) => {
