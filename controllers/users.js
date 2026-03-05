@@ -47,13 +47,12 @@ module.exports.createUser = (req, res) => {
       .send({ message: "The 'email' and 'password' fields are required" });
   }
 
-  bcrypt.hash(password, 10)
+  return bcrypt.hash(password, 10)
     .then((hashedPassword) => User.create({ name, avatar, email, password: hashedPassword }))
     .then((user) => {
       const userObj = user.toObject();
       delete userObj.password;
-      res.status(201).send(userObj);
-      return;
+      return res.status(201).send(userObj);
     })
     .catch((err) => {
       if (err.code === 11000) {
@@ -82,19 +81,16 @@ module.exports.login = (req, res) => {
       .send({ message: "The 'email' and 'password' fields are required" });
   }
 
-  User.findUserByCredentials(email, password)
+  return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
         expiresIn: '7d',
       });
-      res.send({ token });
-      return;
+      return res.send({ token });
     })
-    .catch(() => {
-      res
-        .status(UNAUTHORIZED_ERROR)
-        .send({ message: 'Incorrect email or password' });
-    });
+    .catch(() => res
+      .status(UNAUTHORIZED_ERROR)
+      .send({ message: 'Incorrect email or password' }));
 };
 
 // PATCH /users/me

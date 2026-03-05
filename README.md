@@ -22,3 +22,9 @@ The back-end project is focused on creating a server for the WTWR application. Y
 ### Testing
 
 Before committing your code, make sure you edit the file `sprint.txt` in the root folder. The file `sprint.txt` should contain the number of the sprint you're currently working on. For ex. 12
+
+
+
+
+ Check out [this video](https://drive.google.com/file/d/1_hZMy6X21pr-UBaiJ8oMgggElD1NAtna/view?usp=sharing), where I describe my 
+ project and some challenges I faced while building it.
