@@ -5,7 +5,7 @@ const { JWT_SECRET } = require('../utils/config');
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
 
-  if (!authorization) {
+  if (!authorization || !authorization.startsWith('Bearer ')) {
     return res
       .status(UNAUTHORIZED_ERROR)
       .send({ message: 'Authorization required' });

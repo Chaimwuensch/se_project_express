@@ -10,4 +10,8 @@ router.post('/signup', createUser);
 router.use('/users', auth, usersRouter);
 router.use('/items', clothingItemsRouter);
 
+router.use((req, res) => {
+  res.status(404).send({ message: 'Requested resource not found' });
+});
+
 module.exports = router;

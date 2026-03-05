@@ -10,16 +10,6 @@ const {
 } = require('../utils/errors');
 const { JWT_SECRET } = require('../utils/config');
 
-// GET /users
-module.exports.getUsers = (req, res) => {
-  User.find({})
-    .then((users) => res.send(users))
-    .catch(() => {
-      res
-        .status(INTERNAL_SERVER_ERROR)
-        .send({ message: 'An error has occurred on the server' });
-    });
-};
 
 // GET /users/me
 module.exports.getCurrentUser = (req, res) => {
