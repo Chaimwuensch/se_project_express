@@ -23,7 +23,12 @@ const createClothingItem = (req, res) => {
   const { name, weather, imageUrl } = req.body;
   const owner = req.user._id;
 
-  ClothingItem.create({ name, weather, imageUrl, owner })
+  ClothingItem.create({
+    name,
+    weather,
+    imageUrl,
+    owner,
+  })
     .then((item) => res.status(201).send(item))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -31,6 +36,7 @@ const createClothingItem = (req, res) => {
           .status(BAD_REQUEST_ERROR)
           .send({ message: 'Invalid data passed to create an item' });
       }
+
       return res
         .status(INTERNAL_SERVER_ERROR)
         .send({ message: 'An error has occurred on the server' });
@@ -50,10 +56,9 @@ const deleteClothingItem = (req, res) => {
           .status(FORBIDDEN_ERROR)
           .send({ message: 'You do not have permission to delete this item' });
       }
+
       return ClothingItem.findByIdAndDelete(itemId)
-        .then((deletedItem) => {
-          res.send(deletedItem);
-        });
+        .then((deletedItem) => res.send(deletedItem));
     })
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
@@ -61,11 +66,13 @@ const deleteClothingItem = (req, res) => {
           .status(NOT_FOUND_ERROR)
           .send({ message: 'Item with the specified ID not found' });
       }
+
       if (err.name === 'CastError') {
         return res
           .status(BAD_REQUEST_ERROR)
           .send({ message: 'Invalid item ID' });
       }
+
       return res
         .status(INTERNAL_SERVER_ERROR)
         .send({ message: 'An error has occurred on the server' });
@@ -87,11 +94,13 @@ const likeItem = (req, res) => {
           .status(NOT_FOUND_ERROR)
           .send({ message: 'Item with the specified ID not found' });
       }
+
       if (err.name === 'CastError') {
         return res
           .status(BAD_REQUEST_ERROR)
           .send({ message: 'Invalid item ID' });
       }
+
       return res
         .status(INTERNAL_SERVER_ERROR)
         .send({ message: 'An error has occurred on the server' });
@@ -113,11 +122,13 @@ const dislikeItem = (req, res) => {
           .status(NOT_FOUND_ERROR)
           .send({ message: 'Item with the specified ID not found' });
       }
+
       if (err.name === 'CastError') {
         return res
           .status(BAD_REQUEST_ERROR)
           .send({ message: 'Invalid item ID' });
       }
+
       return res
         .status(INTERNAL_SERVER_ERROR)
         .send({ message: 'An error has occurred on the server' });
