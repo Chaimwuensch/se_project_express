@@ -25,5 +25,9 @@ Before committing your code, make sure you edit the file `sprint.txt` in the roo
 
 here is [the frontend](https://github.com/Chaimwuensch/se_project_react.git)
 
- Check out [this video](https://drive.google.com/file/d/1_hZMy6X21pr-UBaiJ8oMgggElD1NAtna/view?usp=sharing), where I describe my 
+ Check out [this video](https://drive.google.com/file/d/1OKKUPgFprw8P-JDUpkx30tLsAjeIx4sb/view?usp=sharing), where I describe my 
  project and some challenges I faced while building it.
+
+[backend domain](https://api.wearingstuff.jumpingcrab.com)
+[frontend](https://www.wearingstuff.jumpingcrab.com)
+[domain](https://wearingstuff.jumpingcrab.com)
