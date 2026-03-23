@@ -62,7 +62,7 @@ module.exports.createUser = (req, res, next) => {
 };
 
 // POST /signin
-module.exports.login = (req, res) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
@@ -79,7 +79,7 @@ module.exports.login = (req, res) => {
 };
 
 // PATCH /users/me
-module.exports.updateUser = (req, res) => {
+module.exports.updateUser = (req, res, next) => {
   const { _id } = req.user;
   const { name, avatar } = req.body;
 
