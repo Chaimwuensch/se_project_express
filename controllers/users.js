@@ -1,19 +1,14 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-
-const {
-  BAD_REQUEST_ERROR,
-  UNAUTHORIZED_ERROR,
-  CONFLICT_ERROR,
-  NOT_FOUND_ERROR,
-  INTERNAL_SERVER_ERROR,
-} = require('../utils/errors');
-
+const NotFoundError = require('../errors/NotFoundError');
 const { JWT_SECRET } = require('../utils/config');
-
+const BadRequestError = require('../errors/BadRequestError');
+const InternalServerError = require('../errors/InternalServerError');
+const ConflictError = require('../errors/ConflictError');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 // GET /users/me
-module.exports.getCurrentUser = (req, res) => {
+module.exports.getCurrentUser = (req, res, next) => {
   const { _id } = req.user;
 
   User.findById(_id)
@@ -23,25 +18,19 @@ module.exports.getCurrentUser = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        return res
-          .status(NOT_FOUND_ERROR)
-          .send({ message: 'User with the specified ID not found' });
+        return next(new NotFoundError('User with the specified ID not found'));
       }
 
       if (err.name === 'CastError') {
-        return res
-          .status(BAD_REQUEST_ERROR)
-          .send({ message: 'Invalid user ID' });
+        return next(new BadRequestError('Invalid user ID'));
       }
 
-      return res
-        .status(INTERNAL_SERVER_ERROR)
-        .send({ message: 'An error has occurred on the server' });
+      return next(new InternalServerError('An error has occurred on the server'));
     });
 };
 
 // POST /signup
-module.exports.createUser = (req, res) => {
+module.exports.createUser = (req, res, next) => {
   const {
     name, avatar, email, password,
   } = req.body;
@@ -61,20 +50,14 @@ module.exports.createUser = (req, res) => {
     })
     .catch((err) => {
       if (err.code === 11000) {
-        return res
-          .status(CONFLICT_ERROR)
-          .send({ message: 'Email already in use' });
+        return next(new ConflictError('A user with this email already exists'));
       }
 
       if (err.name === 'ValidationError') {
-        return res
-          .status(BAD_REQUEST_ERROR)
-          .send({ message: 'Invalid data passed to create a user' });
+        return next(new BadRequestError('Invalid data passed to create a user'));
       }
 
-      return res
-        .status(INTERNAL_SERVER_ERROR)
-        .send({ message: 'An error has occurred on the server' });
+      return next(new InternalServerError('An error has occurred on the server'));
     });
 };
 
@@ -92,9 +75,7 @@ module.exports.login = (req, res) => {
 
       return res.send({ token });
     })
-    .catch(() => res
-      .status(UNAUTHORIZED_ERROR)
-      .send({ message: 'Incorrect email or password' }));
+    .catch(() => next(new UnauthorizedError('Incorrect email or password')));
 };
 
 // PATCH /users/me
@@ -113,19 +94,13 @@ module.exports.updateUser = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        return res
-          .status(NOT_FOUND_ERROR)
-          .send({ message: 'User with the specified ID not found' });
+        return next(new NotFoundError('User with the specified ID not found'));
       }
 
       if (err.name === 'ValidationError') {
-        return res
-          .status(BAD_REQUEST_ERROR)
-          .send({ message: 'Invalid data passed to update user' });
+        return next(new BadRequestError('Invalid data passed to update user'));
       }
 
-      return res
-        .status(INTERNAL_SERVER_ERROR)
-        .send({ message: 'An error has occurred on the server' });
+      return next(new InternalServerError('An error has occurred on the server'));
     });
 };
